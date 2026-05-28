@@ -6,6 +6,8 @@ import Scores from "./pages/Scores"
 import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
+import TargetImage from "./assets/target.png"
+import Game from "./pages/Game"
 
 function AppLayout() {
   const location = useLocation()
@@ -17,12 +19,12 @@ function AppLayout() {
   return (
     <Container className="mt-2">
       <Row>
-        <Col>
-          <h1>Shooting Range</h1>
+        <Col className="m-2">
+          <span className="p-2" style={{borderRight: "1px solid #dee2e6", marginRight: "12px"}} >Shooting Range <img width="50" src={TargetImage} alt="Target Image"/></span> 
           <Button onClick={() => {navigate("/")}} disabled={isMenu} className="m-1" variant="outline-primary">Menu</Button>
           <Button onClick={() => {navigate("/scores")}} disabled={isScore} className="m-1"variant="outline-primary">Scores</Button>
-          <hr />
         </Col>
+        <hr />
       </Row>
       <Row>
         <Outlet />
@@ -37,6 +39,7 @@ function App() {
       <Route element={<AppLayout />}>
         <Route path="/" element={<Menu />} />
         <Route path="/scores" element={<Scores />} />
+        <Route path="/game" element={<Game />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

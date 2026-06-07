@@ -6,8 +6,10 @@ import Col from 'react-bootstrap/Col';
 
 export default function Home() {
     return (
-        <Col>
-            <Alert variant='danger'>Sorry. Page Not Found!</Alert> 
-        </Col>
+        <Row>
+            <Col>
+                <Alert variant='danger'>Sorry. Page Not Found!</Alert>
+            </Col>
+        </Row>
     )
 }

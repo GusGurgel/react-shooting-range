@@ -5,8 +5,10 @@ import MenuForm from "../components/MenuForm";
 
 export default function Menu() {
     return (
-        <Col>
-            <MenuForm />
-        </Col>
+        <Row>
+            <Col>
+                <MenuForm />
+            </Col>
+        </Row>
     )
 }

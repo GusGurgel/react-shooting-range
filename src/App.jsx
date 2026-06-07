@@ -20,15 +20,13 @@ function AppLayout() {
     <Container className="mt-2">
       <Row>
         <Col className="m-2">
-          <span className="p-2" style={{borderRight: "1px solid #dee2e6", marginRight: "12px"}} >Shooting Range <img width="50" src={TargetImage} alt="Target Image"/></span> 
-          <Button onClick={() => {navigate("/")}} disabled={isMenu} className="m-1" variant="outline-primary">Menu</Button>
-          <Button onClick={() => {navigate("/scores")}} disabled={isScore} className="m-1"variant="outline-primary">Scores</Button>
+          <span className="p-2" style={{ borderRight: "1px solid #dee2e6", marginRight: "12px" }} >Shooting Range <img width="50" src={TargetImage} alt="Target Image" /></span>
+          <Button onClick={() => { navigate("/") }} disabled={isMenu} className="m-1" variant="outline-primary">Menu</Button>
+          <Button onClick={() => { navigate("/scores") }} disabled={isScore} className="m-1" variant="outline-primary">Scores</Button>
         </Col>
         <hr />
       </Row>
-      <Row>
-        <Outlet />
-      </Row>
+      <Outlet />
     </Container>
   )
 }

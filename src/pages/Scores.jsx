@@ -6,8 +6,10 @@ import Col from 'react-bootstrap/Col';
 
 export default function Scores() {
     return (
-        <Col>
-            <Alert variant='info'>No Scores Found!</Alert> 
-        </Col>
+        <Row>
+            <Col>
+                <Alert variant='info'>No Scores Found!</Alert>
+            </Col>
+        </Row>
     )
 }

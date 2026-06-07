@@ -1,5 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +8,7 @@ import { useState } from "react";
 
 export default function MenuForm() {
     const navigate = useNavigate()
-    const [difficulty, setDifficulty] = useState("Easy")
+    const [difficulty, setDifficulty] = useState("Medium")
 
     const handleSubmit = (e) => {
         e.preventDefault()

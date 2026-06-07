@@ -8,7 +8,11 @@ import { useState } from "react";
 
 export default function MenuForm() {
     const navigate = useNavigate()
+<<<<<<< HEAD
     const [difficulty, setDifficulty] = useState("Medium")
+=======
+    const [difficulty, setDifficulty] = useState("Easy")
+>>>>>>> c9714434e8e67f4fe6daaf405ff5052997a2d33a
 
     const handleSubmit = (e) => {
         e.preventDefault()

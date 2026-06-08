@@ -1,15 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import Col from 'react-bootstrap/Col';
 import Gun from '../components/Gun'
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { clamp, getId } from "../utils";
 import ShootDecal from "./ShootDecal";
 import Target from "./Target";
 import config from "../config";
 
-export default function GameCanvas({ setScore, setLifePercent }) {
+export default function GameCanvas({ score, setScore, setLifePercent }) {
     const location = useLocation()
+    const navigate = useNavigate()
 
     const mainColRef = useRef(null)
 
@@ -21,13 +22,13 @@ export default function GameCanvas({ setScore, setLifePercent }) {
     const [shootDecals, setShootDecals] = useState([])
     const [targets, setTargets] = useState([])
 
-    const difficulty = location?.state?.difficulty || "Easy"
+    const difficulty = location?.state?.difficulty || "Medium"
 
     const gunCooldownSeconds = 0.3
     const decalCooldownSeconds = 1
     const targetLifeTimeSeconds = 2
     const targetSpawnCooldown = 1
-    const lifeDecrementPerTargetTimeout = 0.05
+    const lifeDecrementPerTargetTimeout = 0.5
 
     const removeTarget = useCallback((targetId) => {
         setTargets(
@@ -42,13 +43,18 @@ export default function GameCanvas({ setScore, setLifePercent }) {
 
         const timeoutId = setTimeout(() => {
             removeTarget(targetId)
-            setLifePercent(oldLifePercent => oldLifePercent - lifeDecrementPerTargetTimeout)
+            setLifePercent(oldLifePercent => {
+                if (oldLifePercent - lifeDecrementPerTargetTimeout <= 0) {
+                    navigate("/gameover", { state: { ...location?.state, score } })
+                }
+                return oldLifePercent - lifeDecrementPerTargetTimeout
+            })
         }, targetLifeTimeSeconds * 1000)
 
         setTargets((oldTargets) => [...oldTargets, [x, y, targetId, timeoutId]])
 
         return targetId;
-    }, [removeTarget, setLifePercent, setTargets])
+    }, [removeTarget, setLifePercent, setTargets, location, navigate, score])
 
     /* Track main column width and height */
     /* Spawn targets */
@@ -137,6 +143,9 @@ export default function GameCanvas({ setScore, setLifePercent }) {
                         y={y}
                         key={id}
                         onMouseDown={() => {
+                            if (!canShoot) {
+                                return
+                            }
                             clearTimeout(timeoutId)
                             setScore(oldScore => oldScore + 1)
                             removeTarget(id)

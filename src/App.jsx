@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row"
 import Button from "react-bootstrap/Button"
 import TargetImage from "./assets/target.png"
 import Game from "./pages/Game"
+import GameOver from "./pages/GameOver"
 
 function AppLayout() {
   const location = useLocation()
@@ -38,6 +39,7 @@ function App() {
         <Route path="/" element={<Menu />} />
         <Route path="/scores" element={<Scores />} />
         <Route path="/game" element={<Game />} />
+        <Route path="/gameover" element={<GameOver />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

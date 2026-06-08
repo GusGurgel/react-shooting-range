@@ -13,7 +13,7 @@ export default function GameHud({score = 0}) {
     return (
         <>
             <Col>
-                <HeartBar heartCount="5" lifePercent="0.95" />
+                <HeartBar heartCount="5" lifePercent="1.0" />
             </Col>
             <Col className="text-end">
                 Score: {score}

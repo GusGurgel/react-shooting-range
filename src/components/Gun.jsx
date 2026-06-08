@@ -6,26 +6,28 @@ import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import gunIdle from "../assets/gun_1.png"
+import gunFired from "../assets/gun_2.png"
 import { clamp } from "../utils";
 
 
-export default function Gun({ mouseX, parentWidth, parentHeight }) {
+export default function Gun({ mouseX, parentWidth, parentHeight, isShooting=false }) {
     const gunImageRef = useRef(null)
     const imgHeight = 150
     const imgWidth = 150
     const offsetMouseX = -73
     const minMouseX = 0
-    const maxMouseX = parentWidth - (imgWidth - (30 /* Offset to compensate image size */))
+    const maxMouseX = parentWidth - (imgWidth - (10 /* Offset to compensate image size */))
 
     return (
         <img
             ref={gunImageRef}
-            src={gunIdle}
+            src={isShooting ? gunFired : gunIdle}
             alt="gun"
+            className="unselectable"
             style={{
                 height: `${imgHeight}px`,
-                imgWidth: `${imgWidth}px`,
-                position: "relative",
+                width: `${imgWidth}px`,
+                position: "absolute",
                 left: clamp(mouseX + offsetMouseX, minMouseX, maxMouseX),
                 top: parentHeight - imgHeight
             }}

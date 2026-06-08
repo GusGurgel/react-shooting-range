@@ -20,6 +20,6 @@ export default function HeartBar({heartCount = 5, lifePercent = 0}) {
     }
 
     return (
-        heartList.map(HeartLevel => <Heart level={HeartLevel} />)
+        heartList.map((HeartLevel, index) => <Heart key={index} level={HeartLevel} />)
     )
 }

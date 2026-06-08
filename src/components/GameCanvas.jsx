@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { getId } from "../utils";
 import ShootDecal from "./ShootDecal";
+import Target from "./Target";
 
 export default function GameCanvas() {
     const location = useLocation()
@@ -17,6 +18,7 @@ export default function GameCanvas() {
     const [mouseY, setMouseY] = useState(0)
     const [canShoot, setCanShoot] = useState(true)
     const [shootDecals, setShootDecals] = useState([])
+    const [targets, setTargets] = useState()
 
     console.log(shootDecals)
 
@@ -24,8 +26,11 @@ export default function GameCanvas() {
 
     const gunCooldownSeconds = 0.3
     const decalCooldownSeconds = 1
+    const targetLifeTimeSeconds = 2
+    const targetSpawnCooldown = 1
 
     /* Track main column width and height */
+    /* Spawn targets */
     useEffect(() => {
         const currentToObserve = mainColRef.current
 
@@ -38,10 +43,35 @@ export default function GameCanvas() {
             resizeObserver.observe(currentToObserve);
         }
 
+        const removeTarget = (targetId) => {
+            setTargets(
+                (oldTargets) => {
+                    return oldTargets.filter(val => val[2] !== targetId)
+                }
+            )
+        }
+
+        const addTarget = (x, y) => {
+            const targetId = getId()
+            setTargets((oldTargets) => [...oldTargets, [x, y, targetId]])
+            setTimeout(() => {
+                removeTarget(targetId)
+            }, targetLifeTimeSeconds * 1000)
+            return targetId;
+        }
+
+        const spawnTargetIntervalId = setInterval(() => {
+            const x = Math.floor((Math.random() * mainColWidth))
+            const y = Math.floor((Math.random() * mainColHeight))
+
+            addTarget(x, y)
+        }, targetSpawnCooldown * 1000)
+
         return () => {
             resizeObserver.unobserve(currentToObserve)
+            clearInterval(spawnTargetIntervalId)
         }
-    }, []);
+    }, [mainColHeight, mainColWidth]);
 
     /* Track mouse position relative to game canvas */
     const handleMouseMove = (event) => {
@@ -85,7 +115,7 @@ export default function GameCanvas() {
             onMouseMove={handleMouseMove}
             ref={mainColRef}
             className="border"
-            style={{ height: "80vh", padding: "0px", position: "relative"}}
+            style={{ height: "80vh", padding: "0px", position: "relative" }}
         >
             <Gun
                 mouseX={mouseX}
@@ -95,6 +125,9 @@ export default function GameCanvas() {
             />
             {
                 shootDecals.map(([x, y, id]) => <ShootDecal x={x} y={y} key={id} />)
+            }
+            {
+                targets.map(([x, y, id]) => <Target x={x} y={y} key={id} />)
             }
         </Col>
     )

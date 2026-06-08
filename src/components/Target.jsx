@@ -1,14 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import ShootDecalImg from "../assets/shoot_decal.png"
+import TargetImg from "../assets/target.png"
 
 
-export default function ShootDecal({x, y}) {
-    const imgWidth = 60
-    const imgHeight = 60
+export default function Target({x, y}) {
+    const imgWidth = 30
+    const imgHeight = 30
 
     return (
         <img
-            src={ShootDecalImg}
+            src={TargetImg}
             className="unselectable"
             style={{
                 height: `${imgWidth}px`,

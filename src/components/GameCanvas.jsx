@@ -2,12 +2,13 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Col from 'react-bootstrap/Col';
 import Gun from '../components/Gun'
 import { useLocation } from "react-router";
-import { useEffect, useRef, useState } from "react";
-import { getId } from "../utils";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { clamp, getId } from "../utils";
 import ShootDecal from "./ShootDecal";
 import Target from "./Target";
+import config from "../config";
 
-export default function GameCanvas() {
+export default function GameCanvas({ setScore, setLifePercent }) {
     const location = useLocation()
 
     const mainColRef = useRef(null)
@@ -18,9 +19,7 @@ export default function GameCanvas() {
     const [mouseY, setMouseY] = useState(0)
     const [canShoot, setCanShoot] = useState(true)
     const [shootDecals, setShootDecals] = useState([])
-    const [targets, setTargets] = useState()
-
-    console.log(shootDecals)
+    const [targets, setTargets] = useState([])
 
     const difficulty = location?.state?.difficulty || "Easy"
 
@@ -28,6 +27,28 @@ export default function GameCanvas() {
     const decalCooldownSeconds = 1
     const targetLifeTimeSeconds = 2
     const targetSpawnCooldown = 1
+    const lifeDecrementPerTargetTimeout = 0.05
+
+    const removeTarget = useCallback((targetId) => {
+        setTargets(
+            (oldTargets) => {
+                return oldTargets.filter(val => val[2] !== targetId)
+            }
+        )
+    }, [])
+
+    const addTarget = useCallback((x, y) => {
+        const targetId = getId()
+
+        const timeoutId = setTimeout(() => {
+            removeTarget(targetId)
+            setLifePercent(oldLifePercent => oldLifePercent - lifeDecrementPerTargetTimeout)
+        }, targetLifeTimeSeconds * 1000)
+
+        setTargets((oldTargets) => [...oldTargets, [x, y, targetId, timeoutId]])
+
+        return targetId;
+    }, [removeTarget, setLifePercent, setTargets])
 
     /* Track main column width and height */
     /* Spawn targets */
@@ -43,26 +64,9 @@ export default function GameCanvas() {
             resizeObserver.observe(currentToObserve);
         }
 
-        const removeTarget = (targetId) => {
-            setTargets(
-                (oldTargets) => {
-                    return oldTargets.filter(val => val[2] !== targetId)
-                }
-            )
-        }
-
-        const addTarget = (x, y) => {
-            const targetId = getId()
-            setTargets((oldTargets) => [...oldTargets, [x, y, targetId]])
-            setTimeout(() => {
-                removeTarget(targetId)
-            }, targetLifeTimeSeconds * 1000)
-            return targetId;
-        }
-
         const spawnTargetIntervalId = setInterval(() => {
-            const x = Math.floor((Math.random() * mainColWidth))
-            const y = Math.floor((Math.random() * mainColHeight))
+            const x = clamp(Math.floor((Math.random() * mainColWidth)), config.targetSize.width, mainColWidth - config.targetSize.width)
+            const y = clamp(Math.floor((Math.random() * mainColHeight)), config.targetSize.height, mainColHeight - config.gunSize.height - 10)
 
             addTarget(x, y)
         }, targetSpawnCooldown * 1000)
@@ -71,7 +75,7 @@ export default function GameCanvas() {
             resizeObserver.unobserve(currentToObserve)
             clearInterval(spawnTargetIntervalId)
         }
-    }, [mainColHeight, mainColWidth]);
+    }, [mainColHeight, mainColWidth, addTarget]);
 
     /* Track mouse position relative to game canvas */
     const handleMouseMove = (event) => {
@@ -82,17 +86,17 @@ export default function GameCanvas() {
         }
     }
 
-    const addShootDecal = (x, y) => {
+    const addShootDecal = useCallback((x, y) => {
         const id = getId()
 
         setShootDecals(prevShootDecals => [...prevShootDecals, [x, y, id]])
 
         return id
-    }
+    }, [])
 
-    const removeShootDecal = (id) => {
+    const removeShootDecal = useCallback((id) => {
         setShootDecals(prevShootDecals => prevShootDecals.filter(val => val[2] !== id))
-    }
+    }, [])
 
     const handleMouseDown = () => {
         if (canShoot) {
@@ -127,7 +131,18 @@ export default function GameCanvas() {
                 shootDecals.map(([x, y, id]) => <ShootDecal x={x} y={y} key={id} />)
             }
             {
-                targets.map(([x, y, id]) => <Target x={x} y={y} key={id} />)
+                targets.map(([x, y, id, timeoutId]) => {
+                    return <Target
+                        x={x}
+                        y={y}
+                        key={id}
+                        onMouseDown={() => {
+                            clearTimeout(timeoutId)
+                            setScore(oldScore => oldScore + 1)
+                            removeTarget(id)
+                        }}
+                    />
+                })
             }
         </Col>
     )

@@ -8,13 +8,16 @@ import GameHud from "../components/GameHud";
 import GameCanvas from "../components/GameCanvas";
 
 export default function Game() {
+    const [score, setScore] = useState(0)
+    const [lifePercent, setLifePercent] = useState(1)
+
     return (
         <>
             <Row>
-                <GameCanvas />
+                <GameCanvas setScore={setScore} setLifePercent={setLifePercent} />
             </Row>
             <Row>
-                <GameHud />
+                <GameHud score={score} lifePercent={lifePercent} />
             </Row>
         </>
     )

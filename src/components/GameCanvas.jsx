@@ -3,12 +3,12 @@ import Col from 'react-bootstrap/Col';
 import Gun from '../components/Gun'
 import { useLocation, useNavigate } from "react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { clamp, getId } from "../utils";
+import { addScoreToLocalStore, clamp, getId } from "../utils";
 import ShootDecal from "./ShootDecal";
 import Target from "./Target";
 import config from "../config";
 
-export default function GameCanvas({ score, setScore, setLifePercent }) {
+export default function GameCanvas({ score, setScore, lifePercent, setLifePercent }) {
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -38,15 +38,19 @@ export default function GameCanvas({ score, setScore, setLifePercent }) {
         )
     }, [])
 
+    useEffect(() => {
+        if (lifePercent <= 0) {
+            addScoreToLocalStore(score, difficulty)
+            navigate("/gameover", { state: { ...location?.state, score } })
+        }
+    }, [lifePercent, location, navigate, score, difficulty])
+
     const addTarget = useCallback((x, y) => {
         const targetId = getId()
 
         const timeoutId = setTimeout(() => {
             removeTarget(targetId)
             setLifePercent(oldLifePercent => {
-                if (oldLifePercent - lifeDecrementPerTargetTimeout <= 0) {
-                    navigate("/gameover", { state: { ...location?.state, score } })
-                }
                 return oldLifePercent - lifeDecrementPerTargetTimeout
             })
         }, targetLifeTimeSeconds * 1000)

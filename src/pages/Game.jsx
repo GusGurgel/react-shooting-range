@@ -14,7 +14,7 @@ export default function Game() {
     return (
         <>
             <Row>
-                <GameCanvas score={score} setScore={setScore} setLifePercent={setLifePercent} />
+                <GameCanvas score={score} setScore={setScore} setLifePercent={setLifePercent} lifePercent={lifePercent} />
             </Row>
             <Row>
                 <GameHud score={score} lifePercent={lifePercent} />

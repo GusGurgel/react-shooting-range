@@ -3,7 +3,23 @@ export function clamp(num, min, max) {
 }
 
 let globalId = 0
-
 export function getId() {
     return ++globalId
+}
+
+export function getScoresFromLocalStore() {
+    let scores = localStorage.getItem("scores") || "[]"
+    return JSON.parse(scores)
+}
+
+export function getHighScoreFromLocalStore(difficulty) {
+    let scores = getScoresFromLocalStore(difficulty)
+    scores = scores.filter(value => value.difficulty === difficulty)
+    return scores.reduce((max, current) => (current.value || 0) > (max.value || 0) ? current : max, {value: 0})
+}
+
+export function addScoreToLocalStore(score, difficulty = "Easy") {
+    let scores = getScoresFromLocalStore()
+    scores.push({value: score, date: new Date(), difficulty})
+    localStorage.setItem("scores", JSON.stringify(scores))
 }

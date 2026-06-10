@@ -11,5 +11,22 @@ export default {
     shootDecalSize: {
         width: 30,
         height: 30
+    },
+    difficultyConfig: {
+        Easy: {
+            targetLifeTimeSeconds: 1.5,
+            targetSpawnCooldown: 1.5,
+            lifeDecrementPerTargetTimeout: 0.2
+        },
+        Medium: {
+            targetLifeTimeSeconds: 0.8,
+            targetSpawnCooldown: 0.8,
+            lifeDecrementPerTargetTimeout: 0.3
+        },
+        Hard: {
+            targetLifeTimeSeconds: 0.7,
+            targetSpawnCooldown: 0.4,
+            lifeDecrementPerTargetTimeout: 0.3
+        }
     }
 }

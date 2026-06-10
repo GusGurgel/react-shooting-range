@@ -26,9 +26,10 @@ export default function GameCanvas({ score, setScore, lifePercent, setLifePercen
 
     const gunCooldownSeconds = 0.3
     const decalCooldownSeconds = 1
-    const targetLifeTimeSeconds = 2
-    const targetSpawnCooldown = 1
-    const lifeDecrementPerTargetTimeout = 0.5
+
+    const targetLifeTimeSeconds = config.difficultyConfig[difficulty].targetLifeTimeSeconds
+    const targetSpawnCooldown = config.difficultyConfig[difficulty].targetSpawnCooldown
+    const lifeDecrementPerTargetTimeout = config.difficultyConfig[difficulty].lifeDecrementPerTargetTimeout
 
     const removeTarget = useCallback((targetId) => {
         setTargets(

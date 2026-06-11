@@ -16,17 +16,20 @@ export default {
         Easy: {
             targetLifeTimeSeconds: 1.5,
             targetSpawnCooldown: 1.5,
-            lifeDecrementPerTargetTimeout: 0.2
+            lifeDecrementPerTargetTimeout: 0.2,
+            colorVariant: "success"
         },
         Medium: {
             targetLifeTimeSeconds: 0.8,
             targetSpawnCooldown: 0.8,
-            lifeDecrementPerTargetTimeout: 0.3
+            lifeDecrementPerTargetTimeout: 0.3,
+            colorVariant: "warning"
         },
         Hard: {
             targetLifeTimeSeconds: 0.7,
-            targetSpawnCooldown: 0.4,
-            lifeDecrementPerTargetTimeout: 0.3
+            targetSpawnCooldown: 0.5,
+            lifeDecrementPerTargetTimeout: 0.3,
+            colorVariant: "danger"
         }
     }
 }

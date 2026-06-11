@@ -16,7 +16,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.es2022,
-        ...globals.node, 
+        ...globals.node,
       },
       parserOptions: {
         ecmaFeatures: {
@@ -26,7 +26,7 @@ export default [
     },
     settings: {
       react: {
-        version: "19.0", 
+        version: "19.0",
       },
     },
   },
@@ -49,15 +49,16 @@ export default [
         { allowConstantExport: true },
       ],
 
-      "react/prop-types": "off", 
-      "react/display-name": "off", 
+      "react/prop-types": "off",
+      "react/display-name": "off",
       "no-unused-vars": ["warn", {
         argsIgnorePattern: "^_",
         varsIgnorePattern: "^_"
-      }], 
+      }],
       "no-console": ["warn", { allow: ["warn", "error"] }],
-      "prefer-const": "error", 
-      "eqeqeq": ["error", "always"], 
+      "prefer-const": "error",
+      "eqeqeq": ["error", "always"],
+      "quotes": ["error", "double", { "avoidEscape": true, "allowTemplateLiterals": true }],
     },
   },
 ];

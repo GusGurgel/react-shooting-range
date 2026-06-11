@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
+import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
 import { getFormattedDate } from "../utils";
 
 function ScoresTableHeader() {

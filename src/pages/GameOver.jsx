@@ -1,13 +1,13 @@
-import Alert from 'react-bootstrap/Alert';
+import Alert from "react-bootstrap/Alert";
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
-import { useLocation, useNavigate } from 'react-router';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import { useLocation, useNavigate } from "react-router";
 import skullImg from "../assets/skull.svg"
-import { getHighScoreFromLocalStore } from '../utils';
-import config from '../config';
+import { getHighScoreFromLocalStore } from "../utils";
+import config from "../config";
 
 
 export default function GameOver() {

@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from 'react-bootstrap/Row';
-import ScoresTable from '../components/ScoresTable';
-import { getScoresFromLocalStore } from '../utils';
+import Row from "react-bootstrap/Row";
+import ScoresTable from "../components/ScoresTable";
+import { getScoresFromLocalStore } from "../utils";
 
 
 export default function Scores() {

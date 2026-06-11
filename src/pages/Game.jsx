@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from 'react-bootstrap/Row';
+import Row from "react-bootstrap/Row";
 import GameHud from "../components/GameHud";
 import GameCanvas from "../components/GameCanvas";
 import { useState } from "react";

@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Col from 'react-bootstrap/Col';
-import Gun from '../components/Gun'
+import Col from "react-bootstrap/Col";
+import Gun from "../components/Gun"
 import { useLocation, useNavigate } from "react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { addScoreToLocalStore, clamp, getId, pickRandom } from "../utils";

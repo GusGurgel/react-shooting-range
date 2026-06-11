@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Col from 'react-bootstrap/Col';
+import Col from "react-bootstrap/Col";
 import HeartBar from "./HeartBar";
 
 

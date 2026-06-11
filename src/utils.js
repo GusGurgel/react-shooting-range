@@ -8,7 +8,7 @@ export function getId() {
 }
 
 export function getFormattedDate(date) {
-    const pad = (n) => String(n).padStart(2, '0');
+    const pad = (n) => String(n).padStart(2, "0");
 
     const day = pad(date.getDate());
     const month = pad(date.getMonth() + 1); // Meses são base 0

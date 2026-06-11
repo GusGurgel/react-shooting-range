@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
-import { getFormattedDate, getScoresFromLocalStore } from "../utils";
+import { getFormattedDate } from "../utils";
 
 function ScoresTableHeader() {
     return (
@@ -53,6 +53,7 @@ export default function ScoresTable({ scores }) {
                         scores.map((score, index) => {
                             return (
                                 <ScoresTableRow
+                                    key={index}
                                     index={scores.length - index}
                                     date={getFormattedDate(new Date(score.date))}
                                     difficulty={score.difficulty}

@@ -1,10 +1,4 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useNavigate } from "react-router";
-import { useEffect, useRef, useState } from "react";
 import { clamp } from "../utils";
 import Heart from "./Heart";
 

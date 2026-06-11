@@ -2,7 +2,6 @@ import { useMemo } from "react";
 
 function getAudioPlayFunction(audioSource) {
     const audioPlayer = new Audio(audioSource)
-    console.log("audio created!")
 
     return () => {
         audioPlayer.currentTime = 0;

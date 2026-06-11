@@ -1,14 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useNavigate } from "react-router";
-import { useEffect, useRef, useState } from "react";
 import gunIdle from "../assets/gun_1.png"
 import gunFired from "../assets/gun_2.png"
 import { clamp } from "../utils";
 import config from "../config";
+import { useRef } from "react";
 
 
 export default function Gun({ mouseX, parentWidth, parentHeight, isShooting=false }) {

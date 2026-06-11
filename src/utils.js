@@ -20,7 +20,7 @@ export function getFormattedDate(date) {
 }
 
 export function getScoresFromLocalStore() {
-    let scores = localStorage.getItem("scores") || "[]"
+    const scores = localStorage.getItem("scores") || "[]"
     return JSON.parse(scores)
 }
 
@@ -31,7 +31,7 @@ export function getHighScoreFromLocalStore(difficulty) {
 }
 
 export function addScoreToLocalStore(score, difficulty = "Easy") {
-    let scores = getScoresFromLocalStore()
+    const scores = getScoresFromLocalStore()
     scores.push({ value: score, date: new Date(), difficulty })
     localStorage.setItem("scores", JSON.stringify(scores))
 }

@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
-import { getFormattedDate } from "../utils";
+import { getFormattedDate, getHighScoreFromLocalStore } from "../utils";
 
 function ScoresTableHeader() {
     return (
@@ -24,9 +24,9 @@ function ScoresTableHeader() {
     )
 }
 
-function ScoresTableRow({ index, date, difficulty, score }) {
+function ScoresTableRow({ index, date, difficulty, score, isHighScore = false }) {
     return (
-        <tr>
+        <tr className={isHighScore ? "table-warning" : null}>
             <td>
                 {index}
             </td>
@@ -44,8 +44,14 @@ function ScoresTableRow({ index, date, difficulty, score }) {
 }
 
 export default function ScoresTable({ scores }) {
+    const highScoresPerDifficulty = { "Easy": null, "Medium": null, "Hard": null }
+
+    for (const difficulty in highScoresPerDifficulty) {
+        highScoresPerDifficulty[difficulty] = getHighScoreFromLocalStore(difficulty)
+    }
+
     return (
-        <Col lg="6" className="m-auto" style={{ height: "80vh", overflowY: "auto"}}>
+        <Col lg="6" className="m-auto" style={{ height: "80vh", overflowY: "auto" }}>
             <Table>
                 <ScoresTableHeader />
                 <tbody>
@@ -58,6 +64,10 @@ export default function ScoresTable({ scores }) {
                                     date={getFormattedDate(new Date(score.date))}
                                     difficulty={score.difficulty}
                                     score={score.value}
+                                    isHighScore={
+                                        highScoresPerDifficulty[score.difficulty].value !== 0 &&
+                                        score.value === highScoresPerDifficulty[score.difficulty].value
+                                    }
                                 />
                             )
                         })

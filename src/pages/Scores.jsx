@@ -2,14 +2,20 @@ import Alert from 'react-bootstrap/Alert';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ScoresTable from '../components/ScoresTable';
+import { getScoresFromLocalStore } from '../utils';
 
 
 export default function Scores() {
+    const scores = getScoresFromLocalStore().sort(
+        (a, b) => { 
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+        }
+    )
+
     return (
         <Row>
-            <Col>
-                <Alert variant='info'>No Scores Found!</Alert>
-            </Col>
+            <ScoresTable scores={scores} />
         </Row>
     )
 }

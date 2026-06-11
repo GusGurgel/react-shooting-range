@@ -35,3 +35,7 @@ export function addScoreToLocalStore(score, difficulty = "Easy") {
     scores.push({ value: score, date: new Date(), difficulty })
     localStorage.setItem("scores", JSON.stringify(scores))
 }
+
+export function pickRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}

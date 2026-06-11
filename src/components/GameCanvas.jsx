@@ -2,13 +2,23 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Col from 'react-bootstrap/Col';
 import Gun from '../components/Gun'
 import { useLocation, useNavigate } from "react-router";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { addScoreToLocalStore, clamp, getId } from "../utils";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { addScoreToLocalStore, clamp, getId, pickRandom } from "../utils";
 import ShootDecal from "./ShootDecal";
 import Target from "./Target";
 import config from "../config";
+import shootSound1 from "../assets/shoot1.ogg"
+import shootSound2 from "../assets/shoot2.ogg"
+import shootSound3 from "../assets/shoot3.ogg"
+import targetMissedSound from "../assets/target-missed.ogg"
+import useAudioPlayer from "../hooks/useAudioPlayer";
 
 export default function GameCanvas({ score, setScore, lifePercent, setLifePercent }) {
+    const playShoot1 = useAudioPlayer(shootSound1)
+    const playShoot2 = useAudioPlayer(shootSound2)
+    const playShoot3 = useAudioPlayer(shootSound3)
+    const playTargetMissedSound = useAudioPlayer(targetMissedSound)
+
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -51,6 +61,7 @@ export default function GameCanvas({ score, setScore, lifePercent, setLifePercen
 
         const timeoutId = setTimeout(() => {
             removeTarget(targetId)
+            playTargetMissedSound()
             setLifePercent(oldLifePercent => {
                 return oldLifePercent - lifeDecrementPerTargetTimeout
             })
@@ -112,6 +123,7 @@ export default function GameCanvas({ score, setScore, lifePercent, setLifePercen
     const handleMouseDown = () => {
         if (canShoot) {
             setCanShoot(false)
+            pickRandom([playShoot1, playShoot2, playShoot3])()
             const id = addShootDecal(mouseX, mouseY)
 
             setTimeout(() => {

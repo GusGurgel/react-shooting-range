@@ -11,6 +11,7 @@ export default function ShootDecal({x, y}) {
         <img
             src={ShootDecalImg}
             className="unselectable no-pointer-events"
+            draggable="false"
             style={{
                 height: `${imgWidth}px`,
                 width: `${imgHeight}px`,

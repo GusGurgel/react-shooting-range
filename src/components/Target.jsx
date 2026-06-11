@@ -12,6 +12,7 @@ export default function Target({x, y, onMouseDown}) {
             src={TargetImg}
             className="unselectable"
             onMouseDown={onMouseDown}
+            draggable="false"
             style={{
                 height: `${imgWidth}px`,
                 width: `${imgHeight}px`,

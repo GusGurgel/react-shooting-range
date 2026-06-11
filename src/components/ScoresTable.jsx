@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 import { getFormattedDate, getHighScoreFromLocalStore } from "../utils";
+import config from "../config";
 
 function ScoresTableHeader() {
     return (
@@ -27,13 +28,13 @@ function ScoresTableHeader() {
 function ScoresTableRow({ index, date, difficulty, score, isHighScore = false }) {
     return (
         <tr className={isHighScore ? "table-warning" : null}>
-            <td>
+            <td className="">
                 {index}
             </td>
             <td>
                 {date}
             </td>
-            <td>
+            <td className={`text-${config.difficultyConfig[difficulty]?.colorVariant}`}>
                 {difficulty}
             </td>
             <td>
